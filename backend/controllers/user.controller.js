@@ -5,8 +5,8 @@ import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
   try {
-    const { firstName, email, phoneNumber, password, role } = req.body;
-    if (!firstName || !email || !phoneNumber || !password || !role) {
+    const { fullname, email, phoneNumber, password, role } = req.body;
+    if (!fullname || !email || !phoneNumber || !password || !role) {
       res.status(400).json({
         message: "Something is wrong",
         success: false,
@@ -23,7 +23,7 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await User.create({
-      firstName,
+      fullname,
       email,
       phoneNumber,
       password:hashedPassword,
@@ -79,7 +79,7 @@ export const login = async (req, res) => {
 
     user = {
       _id: user._id,
-      firstName: user.firstName,
+      fullname: user.fullname,
       email: user.email,
       phoneNumber: user.phoneNumber,
       role: user.role,
@@ -94,7 +94,7 @@ export const login = async (req, res) => {
         sameSite: "strict",
       })
       .json({
-        message: `welcome Back ${user.firstName}`,
+        message: `welcome Back ${user.fullname}`,
         user,
         success: true,
       });
@@ -116,7 +116,7 @@ export const logout = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    const { firstName, email, phoneNumber, bio, skills } = req.body;
+    const { fullname, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
 
     //file setup 
@@ -133,7 +133,7 @@ export const updateProfile = async (req, res) => {
         success: false,
       });
     }
-    if(firstName) (user.firstName = firstName);
+    if(fullname) (user.fullname = fullname);
     if(email) (user.email = email);
     if(phoneNumber) (user.phoneNumber = phoneNumber);
     if(bio) (user.profile.bio = bio);
@@ -143,7 +143,7 @@ export const updateProfile = async (req, res) => {
 
     user = {
       _id: user._id,
-      firstName: user.firstName,
+      fullname: user.fullname,
       email: user.email,
       phoneNumber: user.phoneNumber,
       role: user.role,
