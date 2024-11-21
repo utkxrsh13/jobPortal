@@ -12,7 +12,7 @@ import store from '@/Redux/Store';
 // import { useSelector } from 'react-redux'; 
 
 const Navbar = () => {
-  const user = true;
+  const user = false;
   // const [user]=useSelector(store=>store.auth);
   return (
     <div className='bg-white'>
